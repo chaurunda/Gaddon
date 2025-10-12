@@ -2,7 +2,7 @@
 
 A Go CLI program that update your wow addon and install new one
 
-Usage: raddon [OPTIONS]
+Usage: gaddon [OPTIONS]
 
 Options:
 
