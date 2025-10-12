@@ -18,8 +18,11 @@ check for update :
 gaddon u /path/to/wow/addon
 ```
 
-install a new addon
+install a new addon (incoming)
 
 ```
-raddon --folder /path/to/wow/addon --install url/to/repo.git
+gaddon --folder /path/to/wow/addon --install url/to/repo.git
 ```
+
+
+This repo is a portage in Go of a program I have written in Rust : (https://github.com/chaurunda/Raddon)[https://github.com/chaurunda/Raddon]
