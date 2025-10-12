@@ -25,4 +25,4 @@ gaddon --folder /path/to/wow/addon --install url/to/repo.git
 ```
 
 
-This repo is a portage in Go of a program I have written in Rust : (https://github.com/chaurunda/Raddon)[https://github.com/chaurunda/Raddon]
+This repo is a portage in Go of a program I have written in Rust : https://github.com/chaurunda/Raddon
