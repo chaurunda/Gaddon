@@ -1,19 +1,18 @@
 package cli
 
 import (
-	"fmt"
+	"goclisandbox/cli/clog"
 	"goclisandbox/cli/cmd"
 	"goclisandbox/cli/git"
 
 	"github.com/spf13/cobra"
 )
 
-var addCmd = &cobra.Command{
+var checkUpdateCmd = &cobra.Command{
 	Use:     "u",
 	Aliases: []string{"update"},
-	Short:   "Update the given path",
+	Short:   "Update the given path 'f' must be given",
 	Long:    "Check if the given path and tell if there is an update available",
-	Args:    cobra.ExactArgs(1),
 	Run: func(cobraCommande *cobra.Command, args []string) {
 		hasUpdate, err := isUpdateAvailable(args)
 
@@ -22,15 +21,15 @@ var addCmd = &cobra.Command{
 		}
 
 		if hasUpdate {
-			fmt.Println("An update is available")
+			clog.ILog("An update is available")
 		} else {
-			fmt.Println("No update available")
+			clog.SLog("No update available")
 		}
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(addCmd)
+	rootCmd.AddCommand(checkUpdateCmd)
 }
 
 func isUpdateAvailable(args []string) (bool, error) {

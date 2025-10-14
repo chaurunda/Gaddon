@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"fmt"
+	"goclisandbox/cli/clog"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -9,13 +9,13 @@ import (
 
 var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("pouet")
+		clog.ELog("To run Gaddon you have to give a flag and a path ex : gaddon . -u /path/to/folder")
 	},
 }
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintf(os.Stderr, "Oops. An error while executing Zero '%s'\n", err)
+		clog.ELog("Oops. An error while executing Zero: " + err.Error())
 		os.Exit(1)
 	}
 }
