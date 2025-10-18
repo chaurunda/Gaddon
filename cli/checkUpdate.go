@@ -5,9 +5,11 @@ import (
 	"goclisandbox/cli/clog"
 	"goclisandbox/cli/cmd"
 	"goclisandbox/cli/git"
+	"log"
 	"os"
 	"strings"
 
+	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
 )
 
@@ -23,10 +25,46 @@ var checkUpdateCmd = &cobra.Command{
 			return
 		}
 
-		// If no folder flag provided, prompt for it
 		if filepath == "" {
+			err := godotenv.Load()
+			if err != nil {
+				log.Fatal("Error loading .env file")
+			}
+
+			fileName := os.Getenv("GADDON_FILE_NAME")
+
+			homeDirPath, err := os.UserHomeDir()
+
+			if err != nil {
+				panic("An error occured on reading user home dir")
+			}
+
+			filePath := homeDirPath + "/" + fileName
+
+			// Check if file exists
+			if _, err := os.Stat(filePath); err == nil {
+				// File exists, read the path from it
+				data, err := os.ReadFile(filePath)
+				if err != nil {
+					clog.Log("Error reading gaddon.txt: " + err.Error())
+				}
+				savedPath := strings.TrimSpace(string(data))
+				if savedPath != "" {
+					filepath = savedPath
+					clog.Log("Using saved path from gaddon.txt: " + filepath)
+				} else {
+					clog.Log("gaddon.txt is empty, will prompt for path")
+				}
+			} else if os.IsNotExist(err) {
+				clog.Log("gaddon.txt does not exist, will prompt for path")
+			} else {
+				clog.Log("Error checking gaddon.txt: " + err.Error())
+			}
+			// If no folder flag provided or the file is not already saved prompt for it
 			filepath = PromptForPath("Please give a wow addon folder path:")
 		}
+
+		clog.ILog(filepath)
 
 		hasUpdate, err := isUpdateAvailable(filepath)
 
