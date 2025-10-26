@@ -29,3 +29,19 @@ func Check_last_distant_commit_id(path string) string {
 
 	return lines[0]
 }
+
+func Install_git_repo(git_url string, path string) {
+	cmd := exec.Command("git", "clone", git_url, path)
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func Update_git_repo(path string) {
+	cmd := exec.Command("git", "-C", path, "pull")
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
